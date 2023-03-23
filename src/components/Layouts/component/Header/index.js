@@ -1,15 +1,41 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import {
+    faCircleQuestion,
+    faCircleXmark,
+    faEarthAsia,
+    faEllipsisVertical,
+    faKeyboard,
+    faMagnifyingGlass,
+    faSignIn,
+    faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react/headless';
 import style from './Header.module.scss';
 import images from '~/assets/image';
+import Button from '~/components/Button';
 import AccountItem from '~/components/AccountItem';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
+import Menu from '~/components/Popper/Menu';
 const cx = classNames.bind(style);
 function Header() {
-    const [searchResult, setSearchResult] = useState(['d']);
+    const MENUS_ITEM = [
+        {
+            icon: <FontAwesomeIcon icon={faEarthAsia}></FontAwesomeIcon>,
+            title: 'Language',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faCircleQuestion}></FontAwesomeIcon>,
+            title: 'Feedback and help',
+            to: '/feedback',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faKeyboard}></FontAwesomeIcon>,
+            title: 'Keyboard and shortcuts',
+        },
+    ];
+    const [searchResult, setSearchResult] = useState([]);
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -42,7 +68,17 @@ function Header() {
                         </button>
                     </div>
                 </Tippy>
-                <div className={cx('actions')}></div>
+                <div className={cx('actions')}>
+                    <Button text>Upload</Button>
+                    <Button primary leftIcon={<FontAwesomeIcon icon={faSignIn}></FontAwesomeIcon>}>
+                        Login
+                    </Button>
+                    <Menu item={MENUS_ITEM}>
+                        <button className={cx('more-btn')}>
+                            <FontAwesomeIcon icon={faEllipsisVertical}></FontAwesomeIcon>
+                        </button>
+                    </Menu>
+                </div>
             </div>
         </header>
     );
